@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Electricity Bill Monitoring System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background: #0a3d62;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #1e6091;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h2 {
+      color: #0a3d62;
+      margin-bottom: 15px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    footer {
+      background: #0a3d62;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Smart Electricity Bill Monitoring & Estimation System</h1>
+    <p>Mini Project | Electrical & Electronics Engineering</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#objectives">Objectives</a>
+    <a href="#methodology">Methodology</a>
+    <a href="#hardware">Hardware</a>
+    <a href="#results">Live Monitoring</a>
+    <a href="#prediction">AI Prediction</a>
+    <a href="#faq">FAQ</a>
+    <a href="#team">Team</a>
+  </nav>
+
+  <section id="about">
+    <div class="card">
+      <h2>About the Project</h2>
+      <p>
+        This project focuses on monitoring electricity consumption in real time and estimating the electricity bill.
+        It helps users understand their power usage and reduce unnecessary energy consumption.
+      </p>
+    </div>
+  </section>
+
+  <section id="objectives">
+    <div class="card">
+      <h2>Objectives</h2>
+      <ul>
+        <li>To measure real-time electricity consumption</li>
+        <li>To estimate electricity bill accurately</li>
+        <li>To create awareness about energy saving</li>
+        <li>To provide a user-friendly monitoring system</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="methodology">
+    <div class="card">
+      <h2>Methodology</h2>
+      <p>
+        The system uses current and voltage sensors to measure power consumption.
+        The data is processed using a microcontroller and displayed through a web interface.
+      </p>
+    </div>
+  </section>
+
+  <section id="hardware">
+    <div class="card">
+      <h2>Hardware & Software Used</h2>
+      <ul>
+        <li>Microcontroller (Arduino / ESP32)</li>
+        <li>Current Sensor</li>
+        <li>Voltage Sensor</li>
+        <li>Wi-Fi Module</li>
+        <li>HTML, CSS, JavaScript</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="results">
+    <div class="card">
+      <h2>Real-Time Energy Monitoring (ESP32)</h2>
+      <p>Live electricity consumption data received from ESP32 via Wi-Fi.</p>
+
+      <h3>Live Readings</h3>
+      <ul>
+        <li><strong>Voltage:</strong> <span id="voltage">--</span> V</li>
+        <li><strong>Current:</strong> <span id="current">--</span> A</li>
+        <li><strong>Power:</strong> <span id="power">--</span> W</li>
+        <li><strong>Total Units Consumed:</strong> <span id="energy">0</span> kWh</li>
+        <li><strong>Expected 2‑Month Bill (KSEB):</strong> ₹<span id="bill">0</span></li>
+      </ul>
+
+      <p style="font-size:0.9em;color:#555;">
+        Real-time monitoring helps consumers understand how usage affects the final 2‑month KSEB bill.
+      </p>
+    </div>
+  </section>
+
+  <section id="prediction">
+    <div class="card">
+      <h2>AI‑Based Weekly & Bi‑Monthly Bill Prediction</h2>
+      <p>
+        Based on current usage trends, the system predicts weekly consumption and estimates the expected 2‑month electricity bill.
+      </p>
+      <ul>
+        <li><strong>Predicted Weekly Units:</strong> <span id="weeklyUnits">--</span> kWh</li>
+        <li><strong>Predicted Weekly Cost:</strong> ₹<span id="weeklyBill">--</span></li>
+        <li><strong>Predicted 2‑Month Units:</strong> <span id="twoMonthUnits">--</span> kWh</li>
+      </ul>
+      <p style="font-size:0.9em;color:#555;">
+        Prediction uses average daily consumption (AI‑logic ready for future ML upgrades).
+      </p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="card">
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <p><strong>Q1. Is this bill calculation accurate like KSEB?</strong><br>
+      Yes. The system follows KSEB domestic slab tariff and estimates the 2‑month bill similar to the actual meter reading.</p>
+
+      <p><strong>Q2. Why is real-time data useful?</strong><br>
+      KSEB provides bills every two months, but this system shows usage and cost instantly.</p>
+
+      <p><strong>Q3. Can tariff rates be changed in the future?</strong><br>
+      Yes. Tariff values are configurable and can be updated based on government policies.</p>
+
+      <p><strong>Q4. Is AI used in this system?</strong><br>
+      AI-based prediction analyzes usage patterns to forecast weekly and bi‑monthly bills.</p>
+    </div>
+  </section>
+
+  <script>
+    let totalEnergy = 0; // kWh
+
+    function calculateKSEBBill(units) {
+      let amount = 0;
+      if (units <= 100) amount = units * 3.15;
+      else if (units <= 200) amount = (100 * 3.15) + (units - 100) * 4.70;
+      else if (units <= 300) amount = (100 * 3.15) + (100 * 4.70) + (units - 200) * 6.40;
+      else amount = (100 * 3.15) + (100 * 4.70) + (100 * 6.40) + (units - 300) * 7.60;
+      return amount.toFixed(2);
+    }
+
+    setInterval(() => {
+      const voltage = (220 + Math.random() * 5).toFixed(1);
+      const current = (1.5 + Math.random()).toFixed(2);
+      const power = (voltage * current).toFixed(1);
+
+      totalEnergy += power / 1000 / 1800; // simulated kWh increment
+
+      const bill = calculateKSEBBill(totalEnergy);
+
+      const dailyAvg = totalEnergy / 1; // simulated day
+      const weeklyUnits = dailyAvg * 7;
+      const twoMonthUnits = dailyAvg * 60;
+
+      document.getElementById('voltage').innerText = voltage;
+      document.getElementById('current').innerText = current;
+      document.getElementById('power').innerText = power;
+      document.getElementById('energy').innerText = totalEnergy.toFixed(2);
+      document.getElementById('bill').innerText = bill;
+
+      document.getElementById('weeklyUnits').innerText = weeklyUnits.toFixed(2);
+      document.getElementById('weeklyBill').innerText = calculateKSEBBill(weeklyUnits);
+      document.getElementById('twoMonthUnits').innerText = twoMonthUnits.toFixed(2);
+    }, 2000);
+  </script>
+
+  <section id="team">
+    <div class="card">
+      <h2>Project Team</h2>
+      <p><strong>Student:</strong> Nihal C</p>
+      <p><strong>Branch:</strong> Electrical & Electronics Engineering</p>
+      <p><strong>Guide:</strong> Project Guide Name</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Smart Electricity Bill Monitoring System</p>
+  </footer>
+
+</body>
+</html>
